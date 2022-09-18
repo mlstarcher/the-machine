@@ -1,53 +1,55 @@
 import time
 
-# tempo = 100
-# beat_length = 60 / tempo
-
-# print(beat_length)
-# def clock():
-#     counter = 0
-#     time.sleep(time.time() * 8 % 1 / 8) # enable to sync clock for demo
-#     while counter < 10:
-#         counter += 1
-#         print(time.time())
-#         time.sleep(beat_length - time.time() * 8 % 1 / 8)
-
-# def setTempo(bpm):
-#   tempo = bpm
 
 class Sequencer:
-  def __init__(self):
-    self.tempo = 100
-    self.status = 'stop'
-    self._beat_length = 60 / self.tempo
-    self.sequence = [
-      [0, 0, 0, 0, 0, 0, 0, 0],
-      [1, 0, 0, 0, 0, 0, 0, 0],
-      [2, 0, 0, 0, 0, 0, 0, 0],
-      [3, 0, 0, 0, 0, 0, 0, 0],
-      [4, 0, 0, 0, 0, 0, 0, 0],
-      [5, 0, 0, 0, 0, 0, 0, 0],
-      [6, 0, 0, 0, 0, 0, 0, 0],
-      [7, 0, 0, 0, 0, 0, 0, 0],
-      ]
-  def clock(self):
-    counter = 0
-    step = 0
-    time.sleep(time.time() * 8 % 1 / 8) # resync clock every loop
-    while counter < 8:
-        if self.status == 'stop':
-          break
-        counter += 1
-        if step == 7:
-          step = 0
+    def __init__(self):
+        self._tempo = 100
+        self.status = 'stop'
+        self._playing = False
+        self.step = 0
+        self.counter = 0
+        self.sequence = [
+            [0, 0, 0, 0, 0, 0, 0, 0],
+            [1, 0, 0, 0, 0, 0, 0, 0],
+            [2, 0, 0, 0, 0, 0, 0, 0],
+            [3, 0, 0, 0, 0, 0, 0, 0],
+            [4, 0, 0, 0, 0, 0, 0, 0],
+            [5, 0, 0, 0, 0, 0, 0, 0],
+            [6, 0, 0, 0, 0, 0, 0, 0],
+            [7, 0, 0, 0, 0, 0, 0, 0],
+        ]
+
+    def play(self):
+        if self._playing:
+            return
+        self._playing = True
+        self.clock()
+
+    def stop(self):
+        if not self._playing:
+            return
+        self._playing = False
+
+    def setTempo(self, bpm):
+        self._tempo = bpm
+
+    def clock(self):
+        if self._playing and self.counter < 10:
+            print(self.step)
+            self.step += 1
+            if self.step == len(self.sequence) - 1:
+                self.step = 0
+            self.counter += 1
+            time.sleep((60 / self._tempo) - time.time() * 8 % 1 / 8)
+            self.clock()
         else:
-          step += 1
-        print(time.time())
-        print(self.sequence[step])
-        time.sleep(self._beat_length - time.time() * 8 % 1 / 8)
-  def play(self):
-    self.status = 'play'
-    self.clock()
+            print('stopped')
+            self.step = 0
+
 
 looper = Sequencer()
 looper.play()
+
+# time.sleep(5)
+print('stopping')
+looper.stop()
