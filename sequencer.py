@@ -1,8 +1,12 @@
+import threading
 import time
+import time
+import threading
 
 
-class Sequencer:
+class Sequencer(threading.Thread):
     def __init__(self):
+        threading.Thread.__init__(self, target=self.play)
         self._tempo = 100
         self.status = 'stop'
         self._playing = False
@@ -29,6 +33,7 @@ class Sequencer:
         if not self._playing:
             return
         self._playing = False
+        threading.Thread.join(self)
 
     def setTempo(self, bpm):
         self._tempo = bpm
@@ -43,13 +48,12 @@ class Sequencer:
             time.sleep((60 / self._tempo) - time.time() * 8 % 1 / 8)
             self.clock()
         else:
-            print('stopped')
             self.step = 0
 
 
 looper = Sequencer()
-looper.play()
+looper.start()
 
-# time.sleep(5)
+time.sleep(2)
 print('stopping')
 looper.stop()
