@@ -7,7 +7,7 @@ import threading
 class Sequencer(threading.Thread):
     def __init__(self):
         threading.Thread.__init__(self, target=self.play)
-        self._tempo = 100
+        self._tempo = 120
         self.status = 'stop'
         self._playing = False
         self.step = 0
@@ -39,7 +39,7 @@ class Sequencer(threading.Thread):
         self._tempo = bpm
 
     def clock(self):
-        if self._playing and self.counter < 10:
+        if self._playing:
             print(self.step)
             self.step += 1
             if self.step == len(self.sequence) - 1:
@@ -52,8 +52,12 @@ class Sequencer(threading.Thread):
 
 
 looper = Sequencer()
+looper.setTempo(60)
 looper.start()
-
-time.sleep(2)
+time.sleep(4)
+looper.setTempo(120)
+time.sleep(4)
+looper.setTempo(60)
+time.sleep(10)
 print('stopping')
 looper.stop()
