@@ -5,22 +5,23 @@ import threading
 
 
 class Sequencer(threading.Thread):
-    def __init__(self):
+    def __init__(self, callback):
         threading.Thread.__init__(self, target=self.play)
         self._tempo = 120
         self.status = 'stop'
         self._playing = False
         self.step = 0
         self.counter = 0
+        self.callback = callback
         self.sequence = [
-            [0, 0, 0, 0, 0, 0, 0, 0],
             [1, 0, 0, 0, 0, 0, 0, 0],
-            [2, 0, 0, 0, 0, 0, 0, 0],
-            [3, 0, 0, 0, 0, 0, 0, 0],
-            [4, 0, 0, 0, 0, 0, 0, 0],
-            [5, 0, 0, 0, 0, 0, 0, 0],
-            [6, 0, 0, 0, 0, 0, 0, 0],
-            [7, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 1, 0, 0, 0],
+            [0, 0, 1, 0, 0, 0, 1, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 1, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 1, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 1],
         ]
 
     def play(self):
@@ -40,18 +41,26 @@ class Sequencer(threading.Thread):
 
     def clock(self):
         if self._playing:
-            print(self.step)
+            # print(self.step)
             self.step += 1
             if self.step == len(self.sequence) - 1:
                 self.step = 0
             self.counter += 1
+            self.callback(self.step, self.sequence[self.step])
             time.sleep((60 / self._tempo) - time.time() * 8 % 1 / 8)
             self.clock()
         else:
             self.step = 0
 
 
-looper = Sequencer()
+def testCallback(index, array):
+    print('array: ', array)
+    for i in array:
+        if array[i] == 1:
+            print('Found one')
+
+
+looper = Sequencer(testCallback)
 looper.setTempo(60)
 looper.start()
 time.sleep(4)

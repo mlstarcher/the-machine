@@ -1,0 +1,27 @@
+{
+  "name": "the-machine",
+  "version": "1.0.0",
+  "description": "Step Sequencer",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mlstarcher/the-machine.git"
+  },
+  "keywords": [
+    "Sequencer"
+  ],
+  "author": "Matthew Starcher",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mlstarcher/the-machine/issues"
+  },
+  "homepage": "https://github.com/mlstarcher/the-machine#readme",
+  "dependencies": {
+    "nanotimer": "^0.3.15"
+  }
+}
