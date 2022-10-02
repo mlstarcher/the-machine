@@ -26,7 +26,7 @@ class StepSequencer {
       this.step = 0;
     }
     console.log('In sequencer step: ', this.step)
-    //emitter.emit('step')
+    emitter.emit('step')
     // setTimeout(this.clock, (60 / this.tempo))
     setTimeout(() => {this.clock()}, 2000)
   }
