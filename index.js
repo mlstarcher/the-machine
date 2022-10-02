@@ -6,5 +6,5 @@ emitter.on("step", () => {
   console.log("steppin");
 });
 
-sequencer.start();
+sequencer.play();
 // emitter.emit('event');
