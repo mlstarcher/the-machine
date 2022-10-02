@@ -1,13 +1,11 @@
 import emitter from './emitter/index.js'
-//var sequencer = require('./sequencer')
-// console.log('StepListener: ', StepListener)
-// StepListener.on('step', () => {
-//   console.log('Stepin')
-// })
-
+import sequencer from './sequencer/index.js'
 console.log('App started');
 
-emitter.on('event', () => {
-  console.log('an event occurred!');
+emitter.on('step', () => {
+  console.log('steppin');
 });
-emitter.emit('event');
+
+sequencer.start();
+// emitter.emit('event');
+

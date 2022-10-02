@@ -1,4 +1,5 @@
-var StepSequencer = require("./sequencerClass");
+// var StepSequencer = require("./sequencerClass");
+import StepSequencer from './sequencerClass.js';
 let sequencer = new StepSequencer();
 
-module.exports = sequencer;
+export default sequencer;

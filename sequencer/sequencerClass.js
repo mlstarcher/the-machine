@@ -1,9 +1,12 @@
 'use strict';
 
 //var EventEmitter = require('events').EventEmitter;
-var EventEmitter = require('../emitter');
-var inherits = require('util').inherits;
-var NanoTimer = require('nanotimer');
+import emitter from '../emitter/index.js'
+// var emitter = require('../emitter')
+//var inherits = require('util').inherits;
+import { inherits } from 'util';
+//var NanoTimer = require('nanotimer');
+import NanoTimer from 'nanotimer';
 
 function play() {
   if (this._playing) return;
@@ -66,10 +69,12 @@ function StepSequencer(tempo, division, sequence) {
   this.timer = new NanoTimer();
   this.timeout = Math.floor((60 / (this.tempo * this.division)) * 10e8) + 'n';
   this._playing = false;
-  EventEmitter.call(this);
+  emitter.call(this);
 }
 
-inherits(StepSequencer, EventEmitter);
+//inherits(StepSequencer, emitter);
+
+class StepSequencer extends emitter
 
 StepSequencer.prototype.play = play;
 StepSequencer.prototype.resume = resume;
@@ -77,4 +82,4 @@ StepSequencer.prototype.stop = stop;
 StepSequencer.prototype.setTempo = setTempo;
 StepSequencer.prototype.setSequence = setSequence;
 
-module.exports = StepSequencer;
+export default StepSequencer;
