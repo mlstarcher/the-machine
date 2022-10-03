@@ -8,7 +8,6 @@ class StepSequencer {
     this._playing = false;
     this.step = 0;
     this._swing = 0;
-    //this.interval = Math.floor(60000 / (this._tempo * 2));
   }
   play() {
     if (this._playing) return;
