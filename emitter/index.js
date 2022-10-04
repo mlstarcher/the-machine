@@ -1,5 +1,4 @@
-import { EventEmitter } from "node:events";
-//var EventEmitter = require('events').EventEmitter;
+import { EventEmitter } from 'node:events';
 
 var emitter = new EventEmitter();
 
