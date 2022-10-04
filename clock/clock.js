@@ -1,10 +1,9 @@
-//import emitter from '../emitter/index.js';
-import { EventEmitter } from 'node:events';
+import emitter from '../emitter/index.js';
+//import { EventEmitter } from 'node:events';
 import NanoTimer from 'nanotimer';
 
-class Clock extends EventEmitter {
+class Clock {
   constructor(tempo, sequence_length) {
-    super();
     this._tempo = tempo || 120;
     this._sequence_length = sequence_length || 16;
     this._running = false;
@@ -14,7 +13,7 @@ class Clock extends EventEmitter {
   run() {
     if (this._running) return;
     this._running = true;
-    this.emit('playing');
+    emitter.emit('playing');
     this.clock();
   }
   setTempo(tempo) {
@@ -26,7 +25,7 @@ class Clock extends EventEmitter {
   stop() {
     if (!this._running) return;
     this._running = false;
-    this.emit('stopped');
+    emitter.emit('stopped');
   }
   clock() {
     let interval = Math.floor(60000 / (this._tempo * 2));
@@ -39,7 +38,7 @@ class Clock extends EventEmitter {
       this.step = 0;
     }
     console.log('Clock is on step ', this.step);
-    this.emit('advance', this.step);
+    emitter.emit('advance', this.step);
     setTimeout(() => this.clock(), interval);
   }
 }

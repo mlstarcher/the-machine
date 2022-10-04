@@ -3,19 +3,19 @@ import clock from './clock/index.js';
 import Track from './sequencer/track.js';
 console.log('App started');
 
-// emitter.once('playing', () => {
-//   console.log('Sequencer starting');
-// });
+emitter.once('playing', () => {
+  console.log('Sequencer starting');
+});
 
-// emitter.once('stopped', () => {
-//   console.log('Sequencer stopped');
-// });
+emitter.once('stopped', () => {
+  console.log('Sequencer stopped');
+});
 
 let track_4 = new Track({
   track_number: 4,
 });
 
-track_4.listen();
+//track_4.listen();
 
 clock.run();
 setTimeout(() => {

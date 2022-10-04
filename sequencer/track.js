@@ -1,22 +1,21 @@
-//import emitter from '../emitter/index.js';
-import Clock from '../clock/clock.js';
+import emitter from '../emitter/index.js';
+//import Clock from '../clock/clock.js';
 
-class Track extends Clock {
+class Track {
   constructor(config) {
-    super();
     this._track_number = config.track_number || 1;
     this.step_number = config.step_number || 1;
-    this.callback =
-      config.callback ||
+    this.callback = () => {
       console.log('Track ' + this._track_number + ' has no callback assigned');
+    };
     this._sequence = config.sequence || [
       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     ];
-    //this.listen();
+    this.listen();
   }
   listen() {
-    this.on('advance', (step_number) => {
-      if (this._sequence[step_number] != 1) return;
+    emitter.on('advance', (step_number) => {
+      //if (this._sequence[step_number] != 1) return;
       this.callback(this._track_number, step_number);
     });
   }
