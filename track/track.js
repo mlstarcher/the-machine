@@ -1,5 +1,4 @@
 import emitter from '../emitter/index.js';
-//import Clock from '../clock/clock.js';
 
 class Track {
   constructor(config) {
@@ -11,11 +10,11 @@ class Track {
     this._sequence = config.sequence || [
       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     ];
-    this.listen();
+    //this.listen();
   }
   listen() {
     emitter.on('advance', (step_number) => {
-      //if (this._sequence[step_number] != 1) return;
+      if (this._sequence[step_number] != 1) return;
       this.callback(this._track_number, step_number);
     });
   }
@@ -35,6 +34,9 @@ class Track {
   }
   deactivateStep() {
     this._sequence[step_number] = 0;
+  }
+  getTrackNumber() {
+    return this._track_number;
   }
 }
 
